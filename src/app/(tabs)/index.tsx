@@ -15,6 +15,7 @@ export default function Home() {
   const [data, setData] = useState<Data[]>([]);
   const [loading, setLoading] = useState(false);
   const [term, setTerm] = useState("");
+  const [selectTab, setSelectTab] = useState("all");
   const navigation = useNavigation();
 
   const getTodos = async () => {
@@ -30,6 +31,10 @@ export default function Home() {
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  const handleSelectTab = (name: string) => {
+    setSelectTab(name);
   };
 
   useEffect(() => {
@@ -62,17 +67,17 @@ export default function Home() {
   const handleDelete = (item: any) => {
     Alert.alert(
       "Atenção",
-      `Vamos deletar sua tarefa "${item.title}". Tem certeza?`,
+      `Tem certeza que deseja deletar sua tarefa "${item.title}"?`,
       [
-        {
-          text: "Deletar",
-          onPress: () => deleteTodo(item.id),
-          style: "destructive",
-        },
         {
           text: "Cancelar",
           onPress: () => {},
           style: "cancel",
+        },
+        {
+          text: "Deletar",
+          onPress: () => deleteTodo(item.id),
+          style: "destructive",
         },
       ]
     );
@@ -151,6 +156,14 @@ export default function Home() {
     );
   };
 
+  const filterDataComplete = data.filter((item) => {
+    return item.completed === true;
+  });
+
+  const filterDataIncomplete = data.filter((item) => {
+    return item.completed === false;
+  });
+
   return (
     <View
       style={{
@@ -207,6 +220,68 @@ export default function Home() {
           </Text>
         </TouchableOpacity>
       </View>
+      <View
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-around",
+          padding: 10,
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onPress={() => handleSelectTab("all")}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              borderBottomWidth: selectTab === "all" ? 1 : 0,
+            }}
+          >
+            Todos
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onPress={() => handleSelectTab("complete")}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              borderBottomWidth: selectTab === "complete" ? 1 : 0,
+            }}
+          >
+            Completos
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onPress={() => handleSelectTab("incomplete")}
+        >
+          <Text
+            style={{
+              fontSize: 18,
+              borderBottomWidth: selectTab === "incomplete" ? 1 : 0,
+            }}
+          >
+            Incompletos
+          </Text>
+        </TouchableOpacity>
+      </View>
       {loading ? (
         <View
           style={{
@@ -219,17 +294,21 @@ export default function Home() {
           <Text>Carregando...</Text>
         </View>
       ) : (
-        <FlatList
-          data={data}
-          style={{ width: "100%", padding: 20 }}
-          renderItem={({ item }) => renderItem(item)}
-          ListEmptyComponent={() => (
-            <View>
-              <Text>{"Nenhum registro encontrado :("}</Text>
-            </View>
-          )}
-        />
+        <>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={selectTab === 'all' ? data : selectTab === 'complete' ? filterDataComplete : filterDataIncomplete}
+            style={{ width: "100%", padding: 20 }}
+            renderItem={({ item }) => renderItem(item)}
+            ListEmptyComponent={() => (
+              <View>
+                <Text>{"Nenhum registro encontrado :("}</Text>
+              </View>
+            )}
+          />
+        </>
       )}
+      <View style={{ marginBottom: 10 }} />
       {/* 
       <Link href="/profile" asChild>
         <Button title="Meu perfil" />

@@ -7,7 +7,7 @@ export default function TabRoutesLayout() {
         options={{
           title: "Inicio",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="list" size={24} color={color} />
+            <MaterialIcons name="list" size={30} color={color} />
           ),
         }}
         name="index"
@@ -16,7 +16,7 @@ export default function TabRoutesLayout() {
         options={{
           title: "Novo",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="playlist-add" size={24} color={color} />
+            <MaterialIcons name="playlist-add" size={30} color={color} />
           ),
         }}
         name="new"
@@ -25,7 +25,7 @@ export default function TabRoutesLayout() {
         options={{
           title: "Configurações",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="settings" size={24} color={color} />
+            <MaterialIcons name="settings" size={25} color={color} />
           ),
         }}
         name="settings"
