@@ -7,19 +7,19 @@ export default function TabRoutesLayout() {
         options={{
           title: "Inicio",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="home" size={24} color={color} />
+            <MaterialIcons name="list" size={24} color={color} />
           ),
         }}
         name="index"
       />
       <Tabs.Screen
         options={{
-          title: "Perfil",
+          title: "Novo",
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name="person" size={24} color={color} />
+            <MaterialIcons name="playlist-add" size={24} color={color} />
           ),
         }}
-        name="profile"
+        name="new"
       />
       <Tabs.Screen
         options={{

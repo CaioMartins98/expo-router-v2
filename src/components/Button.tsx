@@ -8,10 +8,11 @@ import React from "react";
 import { forwardRef } from "react";
 type Props = TouchableOpacityProps & {
   title: string;
+  disable: boolean;
 };
 
 const Button = forwardRef<TouchableOpacity, Props>(
-  ({ title, ...rest }, ref) => {
+  ({ title, disable, ...rest }, ref) => {
     return (
       <TouchableOpacity
         ref={ref}
@@ -19,10 +20,11 @@ const Button = forwardRef<TouchableOpacity, Props>(
           width: 200,
           padding: 16,
           alignItems: "center",
-          backgroundColor: "#5755ee",
+          backgroundColor: disable ? "#aaa8f5" : "#5755ee",
           borderRadius: 8,
           marginTop: 20,
         }}
+        disabled={disable}
         {...rest}
       >
         <Text
